@@ -20,11 +20,11 @@ final class SmsIrSmsGatewayServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->afterResolving(SmsGatewayManager::class, function (SmsGatewayManager $manager, Application $app): void {
-            $manager->extend('smsir', fn (): SmsIrDriver => $app->make(SmsIrDriver::class));
+            $manager->extend('smsir', fn(): SmsIrDriver => $app->make(SmsIrDriver::class));
         });
 
         if ($this->app->bound('sms-gateway')) {
-            $this->app->make('sms-gateway')->extend('smsir', fn (): SmsIrDriver => $this->app->make(SmsIrDriver::class));
+            $this->app->make('sms-gateway')->extend('smsir', fn(): SmsIrDriver => $this->app->make(SmsIrDriver::class));
         }
     }
 }
