@@ -1,0 +1,70 @@
+{
+    "name": "misaf/laravel-sms-gateway-smsir",
+    "description": "SMS.ir driver for misaf/laravel-sms-gateway.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "sms",
+        "sms-gateway",
+        "smsir"
+    ],
+    "homepage": "https://github.com/misaf/laravel-sms-gateway-smsir",
+    "support": {
+        "issues": "https://github.com/misaf/laravel-sms-gateway-smsir/issues",
+        "source": "https://github.com/misaf/laravel-sms-gateway-smsir"
+    },
+    "authors": [
+        {
+            "name": "Ehsan Mahmoodi",
+            "email": "misaf.1990@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "misaf/laravel-sms-gateway": "^1.0",
+        "spatie/laravel-package-tools": "^1.92"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.10",
+        "larastan/larastan": "^3.9.2",
+        "mockery/mockery": "^1.6.12",
+        "nunomaduro/collision": "^8.8.3",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^4.3.2",
+        "pestphp/pest-plugin-laravel": "^4.0"
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Misaf\\LaravelSmsGatewaySmsIr\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Misaf\\LaravelSmsGatewaySmsIr\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Misaf\\LaravelSmsGatewaySmsIr\\SmsIrSmsGatewayServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
