@@ -1,13 +1,18 @@
 {
     "name": "misaf/laravel-sms-gateway-smsir",
-    "description": "SMS.ir driver for misaf/laravel-sms-gateway.",
+    "description": "SMS.ir SMS gateway driver for Laravel.",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "laravel",
+        "laravel-package",
         "sms",
+        "sms-api",
         "sms-gateway",
-        "smsir"
+        "sms-provider",
+        "sms-driver",
+        "smsir",
+        "sms-ir"
     ],
     "homepage": "https://github.com/misaf/laravel-sms-gateway-smsir",
     "support": {
