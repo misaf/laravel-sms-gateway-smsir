@@ -24,7 +24,7 @@ final class SmsIrSmsGatewayServiceProvider extends PackageServiceProvider
         });
 
         if ($this->app->bound('sms-gateway')) {
-            $this->app->make('sms-gateway')->extend('smsir', fn(): SmsIrDriver => $this->app->make(SmsIrDriver::class));
+            $this->app->make('sms-gateway')->extend('smsir', fn(Application $app): SmsIrDriver => $app->make(SmsIrDriver::class));
         }
     }
 }
