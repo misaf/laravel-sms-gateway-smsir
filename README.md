@@ -21,8 +21,19 @@ SMS_GATEWAY_SMSIR_APIKEY=your-api-key
 // config/services.php
 'smsir' => [
     'api_key' => env('SMS_GATEWAY_SMSIR_APIKEY'),
+    'base_url' => env('SMS_GATEWAY_SMSIR_BASE_URL', 'https://api.sms.ir/v1/'),
 ],
 ```
+
+## Driver Behavior
+
+| Option | Value |
+| --- | --- |
+| Driver name | `smsir` |
+| Default base URL | `https://api.sms.ir/v1/` |
+| `send()` endpoint | `POST send/bulk` |
+| Authentication | `X-API-KEY` header when `services.smsir.api_key` is configured |
+| Payload | Sent directly to SMS.ir |
 
 ## Usage
 
@@ -31,7 +42,7 @@ use Misaf\LaravelSmsGateway\Facade\SmsGateway;
 
 $response = SmsGateway::driver('smsir')->send([
     'mobile'  => '09123456789',
-    'message' => 'Hello',
+    'message' => 'Hello from sms.ir',
 ]);
 ```
 

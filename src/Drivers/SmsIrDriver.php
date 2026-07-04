@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace Misaf\LaravelSmsGatewaySmsIr\Drivers;
 
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Response;
 use Misaf\LaravelSmsGateway\SmsGatewayDriver;
 
 final class SmsIrDriver extends SmsGatewayDriver
 {
-    protected function driverName(): string
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function send(array $data): Response
     {
-        return 'smsir';
+        return $this->request()->post('send/bulk', $data);
     }
 
-    protected function defaultGateway(): string
+    protected function defaultBaseUrl(): string
     {
         return 'https://api.sms.ir/v1/';
     }
 
     protected function apiKeyHeader(): string
     {
-        return $this->serviceConfigString('api_key_header', 'X-API-KEY');
+        return 'X-API-KEY';
     }
 
     protected function configureRequest(PendingRequest $request): PendingRequest

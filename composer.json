@@ -28,8 +28,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "misaf/laravel-sms-gateway": "^1.0",
-        "spatie/laravel-package-tools": "^1.92"
+        "misaf/laravel-sms-gateway": "^3.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.10",
