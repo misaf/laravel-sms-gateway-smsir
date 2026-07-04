@@ -11,21 +11,19 @@ test('can send request through smsir driver', function (): void {
     config()->set('services.smsir.api_key', 'smsir-api-key');
 
     Http::fake([
-        'https://api.sms.ir/v1/send' => Http::response([
+        'https://api.sms.ir/v1/send/bulk' => Http::response([
             'status'  => 1,
             'message' => 'ok',
         ], 200),
     ]);
 
-    $response = SmsGateway::driver()->request()
-        ->post('send', [
-            'mobile'  => '09123456789',
-            'message' => 'Hello from sms.ir',
-        ])
-        ->json();
+    $response = SmsGateway::driver()->send([
+        'mobile'  => '09123456789',
+        'message' => 'Hello from sms.ir',
+    ])->json();
 
     Http::assertSent(function (Request $request): bool {
-        return 'https://api.sms.ir/v1/send' === $request->url()
+        return 'https://api.sms.ir/v1/send/bulk' === $request->url()
             && $request->hasHeader('X-API-KEY', 'smsir-api-key')
             && '09123456789' === $request['mobile']
             && 'Hello from sms.ir' === $request['message'];
@@ -38,20 +36,36 @@ test('does not send api key header when smsir api key is missing', function (): 
     config()->set('sms_gateway.default', 'smsir');
 
     Http::fake([
-        'https://api.sms.ir/v1/send' => Http::response([
+        'https://api.sms.ir/v1/send/bulk' => Http::response([
             'status'  => 1,
             'message' => 'ok',
         ], 200),
     ]);
 
-    SmsGateway::driver()->request()
-        ->post('send', [
-            'mobile'  => '09123456789',
-            'message' => 'Hello from sms.ir',
-        ]);
+    SmsGateway::driver()->send([
+        'mobile'  => '09123456789',
+        'message' => 'Hello from sms.ir',
+    ]);
 
     Http::assertSent(function (Request $request): bool {
-        return 'https://api.sms.ir/v1/send' === $request->url()
+        return 'https://api.sms.ir/v1/send/bulk' === $request->url()
             && ! $request->hasHeader('X-API-KEY');
+    });
+});
+
+test('prefers the base URL configured in services over the driver default', function (): void {
+    config()->set('sms_gateway.default', 'smsir');
+    config()->set('services.smsir.base_url', 'https://services-override.example.test/v1/');
+
+    Http::fake([
+        'https://services-override.example.test/*' => Http::response(['status' => 1], 200),
+    ]);
+
+    SmsGateway::driver()->send([
+        'message' => 'Hello',
+    ]);
+
+    Http::assertSent(function (Request $request): bool {
+        return 'https://services-override.example.test/v1/send/bulk' === $request->url();
     });
 });
